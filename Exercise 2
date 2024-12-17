@@ -22,3 +22,11 @@ def navigatefile():
                     print(f"Invalid line number. Please enter a number between 1 and {line_count}.")
             except ValueError:
                 print("Please enter a valid integer.")
+
+except FileNotFoundError:
+        print("File not found. Please ensure the file exists.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+if name == "main":
+    navigate_file()
