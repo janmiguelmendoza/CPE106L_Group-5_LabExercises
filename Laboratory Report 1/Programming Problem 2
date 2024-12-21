@@ -1,15 +1,16 @@
-def navigatefile():
+def navigate_file():
+    """Navigates a text file, allowing the user to view specific lines."""
     try:
         filename = input("Enter the filename: ")
         with open(filename, 'r') as file:
             lines = file.readlines()
 
-        linecount = len(lines)
-        print(f"The file has {linecount} lines. Enter 0 to quit.")
+        line_count = len(lines)
+        print(f"The file has {line_count} lines. Enter 0 to quit.")
 
-  while True:
+        while True:
             try:
-                linenumber = int(input(f"Enter a line number (1-{line_count}): "))
+                line_number = int(input(f"Enter a line number (1-{line_count}): "))
 
                 if line_number == 0:
                     print("Exiting program.")
@@ -21,10 +22,10 @@ def navigatefile():
             except ValueError:
                 print("Please enter a valid integer.")
 
-except FileNotFoundError:
+    except FileNotFoundError:
         print("File not found. Please ensure the file exists.")
     except Exception as e:
         print(f"An error occurred: {e}")
 
-if name == "main":
+if __name__ == "__main__":
     navigate_file()
