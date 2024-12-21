@@ -1,3 +1,8 @@
-# CPE106L-4 Group 5 Laboratory Reports
+# Instructions for CPE106L-4 Group 5 Laboratory Reports
 
-This entails the laboratory reports of Group 5 in CPE106L
+**To Setup**
+1. Open VS Code
+2. Click "Clone Git Repository"
+3. Copy + Paste this link to the VS Code bar
+
+**For Programming Exercise 1:** 
