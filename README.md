@@ -8,9 +8,9 @@
 4. Select any folder you would like to place the destination 
 5. A window will pop-up and just select “Open” 
 6. Another window will pop-up... just select “Yes, I trust the authors” 
-7. On the left side of the panel, click “Programming Problem 1” under “Laboratory Report 1” 
+7. On the left side of the panel, click “PostLabSolution1” under “Laboratory Report 1” 
 8. A python file will appear and on the top left, press the triangle that says “Run Python File” and observe and it will output the solution to the problem as it is hardcoded 
-9. After running programming problem 1, run programming problem 2 by doing the same procedure for programming problem 2. 
+9. After running programming problem 1, run programming problem 2 by doing the same procedure for "PostLabSolution2". 
 10. When running the python file, it should appear “Enter Filename:” 
 11. Search or make a random text document in your files that is maximum of 5 lines 
 12. Once you have your file, hold left “shift” button and right click on your chosen text document and select “Copy as Path” 
