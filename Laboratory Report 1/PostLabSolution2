@@ -1,5 +1,4 @@
 def navigate_file():
-    """Navigates a text file, allowing the user to view specific lines."""
     try:
         filename = input("Enter the filename: ")
         with open(filename, 'r') as file:
