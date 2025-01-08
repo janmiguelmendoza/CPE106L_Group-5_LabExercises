@@ -1,7 +1,0 @@
-WITH
-BY
-ON
-IN
-AT
-NEAR
-UNDER
