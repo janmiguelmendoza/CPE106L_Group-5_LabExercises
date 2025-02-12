@@ -1,1 +1,231 @@
+const { MongoClient, ObjectId } = require('mongodb');
+
+console.log(ObjectId);
+
+async function run() {
+  const uri = 'mongodb://localhost:27017';
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect(); 
+    const db = client.db('LR6_test');
+
+    console.log("Connected to the Database");
+
+    const mediaTypesCollection = db.collection('media_types');
+    const genresCollection = db.collection('genres');
+    const playlistsCollection = db.collection('playlists');
+    const playlistTrackCollection = db.collection('playlist_track');
+    const tracksCollection = db.collection('tracks');
+    const artistsCollection = db.collection('artists');
+    const invoicesCollection = db.collection('invoices');
+    const invoiceItemsCollection = db.collection('invoice_items');
+    const albumsCollection = db.collection('albums');
+    const customersCollection = db.collection('customers');
+    const employeesCollection = db.collection('employees');
+
+    await mediaTypesCollection.insertMany([
+      { _id: new ObjectId(), MediaTypeId: 1, Name: "Audio" },
+      { _id: new ObjectId(), MediaTypeId: 2, Name: "Video" }
+    ]);
+
+    await genresCollection.insertMany([
+      { _id: new ObjectId(), GenreId: 1, Name: "Rock" },
+      { _id: new ObjectId(), GenreId: 2, Name: "Pop" }
+    ]);
+
+    await playlistsCollection.insertMany([
+      { _id: new ObjectId(), PlaylistId: 1, Name: "Workout Mix" },
+      { _id: new ObjectId(), PlaylistId: 2, Name: "Chill Vibes" }
+    ]);
+
+    await playlistTrackCollection.insertMany([
+      { _id: new ObjectId(), PlaylistId: 1, TrackId: 1 },
+      { _id: new ObjectId(), PlaylistId: 2, TrackId: 2 }
+    ]);
+
+    await tracksCollection.insertMany([
+      {
+        _id: new ObjectId(),
+        TrackId: 1,
+        Name: "Track A",
+        AlbumId: 1,
+        MediaTypeId: 1,
+        GenreId: 1,
+        Composer: "Composer A",
+        Milliseconds: 210000,
+        Bytes: 5242880,
+        UnitPrice: 0.99
+      },
+      {
+        _id: new ObjectId(),
+        TrackId: 2,
+        Name: "Track B",
+        AlbumId: 2,
+        MediaTypeId: 2,
+        GenreId: 2,
+        Composer: "Composer B",
+        Milliseconds: 180000,
+        Bytes: 4194304,
+        UnitPrice: 1.29
+      }
+    ]);
+
+    await artistsCollection.insertMany([
+      {
+        _id: new ObjectId(),
+        ArtistId: 1,
+        Name: "Artist A"
+      },
+      {
+        _id: new ObjectId(),
+        ArtistId: 2,
+        Name: "Artist B"
+      }
+    ]);
+
+    await invoicesCollection.insertMany([
+      {
+        _id: new ObjectId(),
+        InvoiceId: 1,
+        CustomerId: 1,
+        InvoiceDate: new Date("2023-01-01T10:00:00Z"),
+        BillingAddress: "123 Main St",
+        BillingCity: "San Juan",
+        BillingState: "NCR",
+        BillingCountry: "Philippines",
+        BillingPostalCode: "1500",
+        Total: 99.99
+      },
+      {
+        _id: new ObjectId(),
+        InvoiceId: 2,
+        CustomerId: 2,
+        InvoiceDate: new Date("2023-02-01T10:00:00Z"),
+        BillingAddress: "456 Elm St",
+        BillingCity: "Quezon City",
+        BillingState: "NCR",
+        BillingCountry: "Philippines",
+        BillingPostalCode: "1100",
+        Total: 149.99
+      }
+    ]);
+
+    await invoiceItemsCollection.insertMany([
+      {
+        _id: new ObjectId(),
+        InvoiceItemId: 1,
+        InvoiceId: 1,
+        TrackId: 1,
+        UnitPrice: 0.99,
+        Quantity: 1
+      },
+      {
+        _id: new ObjectId(),
+        InvoiceItemId: 2,
+        InvoiceId: 1,
+        TrackId: 2,
+        UnitPrice: 1.29,
+        Quantity: 2
+      }
+    ]);
+
+    await albumsCollection.insertMany([
+      {
+        _id: new ObjectId(),
+        AlbumId: 1,
+        Title: "Album A",
+        ArtistId: 1
+      },
+      {
+        _id: new ObjectId(),
+        AlbumId: 2,
+        Title: "Album B",
+        ArtistId: 2
+      }
+    ]);
+
+    await customersCollection.insertMany([
+      {
+        _id: new ObjectId(),
+        CustomerId: 1,
+        FirstName: "John",
+        LastName: "Doe",
+        Company: "Company A",
+        Address: "123 Main St",
+        City: "San Juan",
+        State: "NCR",
+        Country: "Philippines",
+        PostalCode: "1500",
+        Phone: "123-456-7890",
+        Fax: "123-456-7891",
+        Email: "john.doe@example.com",
+        SupportRepId: 1
+      },
+      {
+        _id: new ObjectId(),
+        CustomerId: 2,
+        FirstName: "Jane",
+        LastName: "Smith",
+        Company: "Company B",
+        Address: "456 Elm St",
+        City: "Quezon City",
+        State: "NCR",
+        Country: "Philippines",
+        PostalCode: "1100",
+        Phone: "987-654-3210",
+        Fax: "987-654-3211",
+        Email: "jane.smith@example.com",
+        SupportRepId: 2
+      }
+    ]);
+
+    await employeesCollection.insertMany([
+      {
+        _id: new ObjectId(),
+        EmployeeId: 1,
+        LastName: "Doe",
+        FirstName: "John",
+        Title: "Manager",
+        ReportsTo: null,
+        BirthDate: new Date("1980-01-01T00:00:00Z"),
+        HireDate: new Date("2010-05-01T00:00:00Z"),
+        Address: "123 Main St",
+        City: "San Juan",
+        State: "NCR",
+        Country: "Philippines",
+        PostalCode: "1500",
+        Phone: "123-456-7890",
+        Email: "john.doe@example.com",
+        Salary: 50000
+      },
+      {
+        _id: new ObjectId(),
+        EmployeeId: 2,
+        LastName: "Smith",
+        FirstName: "Jane",
+        Title: "Sales Representative",
+        ReportsTo: 1,
+        BirthDate: new Date("1990-02-01T00:00:00Z"),
+        HireDate: new Date("2015-08-01T00:00:00Z"),
+        Address: "456 Elm St",
+        City: "Quezon City",
+        State: "NCR",
+        Country: "Philippines",
+        PostalCode: "1100",
+        Phone: "987-654-3210",
+        Email: "jane.smith@example.com",
+        Salary: 40000
+      }
+    ]);
+
+    console.log('Data inserted successfully');
+  } catch (error) {
+    console.error(error);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
 
