@@ -1,1 +1,125 @@
+import sqlite3
+import os
+
+def execute_sql_script():
+    """Creates tables and inserts predefined data."""
+    conn = sqlite3.connect("colonial_adventure.db")
+    cursor = conn.cursor()
+    
+    sql_script = '''
+    CREATE TABLE IF NOT EXISTS GUIDE (
+        GUIDE_NUM CHAR(4) PRIMARY KEY,
+        LAST_NAME CHAR(15),
+        FIRST_NAME CHAR(15),
+        ADDRESS CHAR(25),
+        CITY CHAR(25),
+        STATE CHAR(2),
+        POSTAL_CODE CHAR(5),
+        PHONE_NUM CHAR(12),
+        HIRE_DATE DATE
+    );
+
+    CREATE TABLE IF NOT EXISTS CUSTOMER (
+        CUSTOMER_NUM CHAR(4) PRIMARY KEY,
+        LAST_NAME CHAR(30) NOT NULL,
+        FIRST_NAME CHAR(30),
+        ADDRESS CHAR(35),
+        CITY CHAR(35),
+        STATE CHAR(2),
+        POSTAL_CODE CHAR(5),
+        PHONE CHAR(12)
+    );
+
+    CREATE TABLE IF NOT EXISTS RESERVATION (
+        RESERVATION_ID CHAR(7) PRIMARY KEY,
+        TRIP_ID DECIMAL(3,0),
+        TRIP_DATE DATE,
+        NUM_PERSONS DECIMAL(3,0),
+        TRIP_PRICE DECIMAL(6,2),
+        OTHER_FEES DECIMAL(6,2),
+        CUSTOMER_NUM CHAR(4)
+    );
+
+    CREATE TABLE IF NOT EXISTS TRIP (
+        TRIP_ID DECIMAL(3,0) PRIMARY KEY,
+        TRIP_NAME CHAR(75),
+        START_LOCATION CHAR(50),
+        STATE CHAR(2),
+        DISTANCE DECIMAL(4,0),
+        MAX_GRP_SIZE DECIMAL(4,0),
+        TYPE CHAR(20),
+        SEASON CHAR(20)
+    );
+
+    CREATE TABLE IF NOT EXISTS TRIP_GUIDES (
+        TRIP_ID DECIMAL(3,0),
+        GUIDE_NUM CHAR(4),
+        PRIMARY KEY (TRIP_ID, GUIDE_NUM)
+    );
+    '''
+    
+    cursor.executescript(sql_script)
+    
+    # Insert predefined data into tables
+    cursor.executescript('''
+    INSERT INTO GUIDE VALUES
+    ('AM01','Abrams','Miles','54 Quest Ave.','Williamsburg','MA','01096','617-555-6032','6-3-2012'),
+    ('BR01','Boyers','Rita','140 Oakton Rd.','Jaffrey','NH','03452','603-555-2134','3-4-2012');
+    
+    INSERT INTO CUSTOMER VALUES
+    ('101','Northfold','Liam','9 Old Mill Rd.','Londonderry','NH','03053','603-555-7563'),
+    ('102','Ocean','Arnold','2332 South St. Apt 3','Springfield','MA','01101','413-555-3212');
+    
+    INSERT INTO RESERVATION VALUES
+    ('1600001',40,'3-26-2016',2,55.00,0.00,'101'),
+    ('1600002',21,'6-8-2016',2,95.00,0.00,'101');
+    
+    INSERT INTO TRIP VALUES
+    (1,'Arethusa Falls','Harts Location','NH',5,10,'Hiking','Summer'),
+    (2,'Mt Ascutney - North Peak','Weathersfield','VT',5,6,'Hiking','Late Spring');
+    
+    INSERT INTO TRIP_GUIDES VALUES
+    (1,'GZ01'),
+    (1,'RH01');
+    ''')
+    
+    conn.commit()
+    conn.close()
+    print("Database tables and predefined data loaded successfully.")
+
+def check_tables():
+    """Checks and lists all existing tables in the database."""
+    conn = sqlite3.connect("colonial_adventure.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    tables = cursor.fetchall()
+    print("\nExisting Tables in Database:")
+    for table in tables:
+        print(table[0])
+    conn.close()
+
+def fetch_data():
+    """Fetches and prints all data from all tables."""
+    conn = sqlite3.connect("colonial_adventure.db")
+    cursor = conn.cursor()
+    tables = ["GUIDE", "CUSTOMER", "RESERVATION", "TRIP", "TRIP_GUIDES"]
+    
+    for table in tables:
+        cursor.execute(f"SELECT * FROM {table}")
+        rows = cursor.fetchall()
+        print(f"\nData from {table}:")
+        for row in rows:
+            print(row)
+    
+    conn.close()
+
+def main():
+    """Main function to run the script."""
+    execute_sql_script()
+    check_tables()
+    fetch_data()
+    print("\nDatabase interaction completed.")
+
+if __name__ == "__main__":
+    main()
 
